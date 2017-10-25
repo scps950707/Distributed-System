@@ -1,0 +1,13 @@
+test1.txt and test2.txt are the example files, and then it has more than two nodes that have the same W(v) / (deg(v) + 1) value in test2.txt. 
+Please refer to test_result1.txt and test_result2.txt to check what result you should output.
+Also, please compress your folder , and hand it in.
+
+Your folder should be named after[student_ID], and must include the following three files:
+1.exercise_a
+   It is your source code of exercise(a), and it must be coded in Python, Java, C or C++.
+2.exercise_b
+   It is your source code of exercise(b), and it must be coded in Python, Java, C or C++.
+3.README.md
+   Please tell me how to input the test file name so that I can change file name when I check your codes.
+
+Have a good programming time!
