@@ -3,7 +3,7 @@
 # Author:         scps950707
 # Email:          scps950707@gmail.com
 # Created:        2017-10-26 15:13
-# Last Modified:  2017-10-27 12:55
+# Last Modified:  2017-10-27 17:17
 # Filename:       exercise_b.py
 # ==========================================================================
 nPoints = int(raw_input())
@@ -14,31 +14,39 @@ for i in range(0, nPoints):
                   'weight': weight[i],
                   'edge': map(int, raw_input().split())})
 
-I = []
+prev_round = [-1] * nPoints
+curr_round = [-1] * nPoints
+
 while True:
     for i in range(0, nPoints):
-        totalNeighbors = 0
-        if Graph[i]['weight'] < 0 or i in I:
+        if prev_round[i] == 1 or prev_round[i] == 0:
             continue
         neighbors = [idx for idx, val in enumerate(Graph[i]['edge'])
                      if val == 1]
-        totalNeighbors += len(neighbors)
+        neiChoicePrev = []
+        for n in neighbors:
+            neiChoicePrev.append(prev_round[n])
+
+        # Single node with no neighbor
+        if len(neiChoicePrev) == neiChoicePrev.count(0):
+            curr_round[i] = 1
+            continue
+        if 1 in neiChoicePrev:
+            curr_round[i] = 0
+            continue
         isMax = True
         for n in neighbors:
             tn = float(Graph[n]['weight'])/float(Graph[n]['edge'].count(1)+1)
             ti = float(Graph[i]['weight'])/float(Graph[i]['edge'].count(1)+1)
-            if tn > ti:
+            if tn > ti or (tn == ti and i > n):
                 isMax = False
         if isMax:
-            I.append(Graph[i]['id'])
-            for n in neighbors:
-                Graph[n]['weight'] = -1
-                Graph[n]['edge'][i] = 0
-                Graph[i]['edge'][n] = 0
-    if totalNeighbors == 0:
-        for i in range(0, nPoints):
-            if i not in I and Graph[i]['weight'] > 0:
-                I.append(i)
+            curr_round[i] = 1
+    resEqual = True
+    for i in range(0, nPoints):
+        if prev_round[i] != curr_round[i]:
+            resEqual = False
+            prev_round[i] = curr_round[i]
+    if resEqual:
         break
-# print(Graph)
-print(sorted(I))
+print([i for i, v in enumerate(curr_round) if v == 1])
