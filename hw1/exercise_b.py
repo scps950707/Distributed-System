@@ -3,7 +3,7 @@
 # Author:         scps950707
 # Email:          scps950707@gmail.com
 # Created:        2017-10-26 15:13
-# Last Modified:  2017-11-12 02:19
+# Last Modified:  2017-11-12 15:54
 # Filename:       exercise_b.py
 # ==========================================================================
 from enum import Enum
@@ -12,6 +12,15 @@ from enum import Enum
 class CHO(Enum):
     njoin = 0
     join = 1
+
+
+def comparePriority(i, neighbors):
+    ti = float(Graph[i]['weight'])/float(Graph[i]['edge'].count(1)+1)
+    for n in neighbors:
+        tn = float(Graph[n]['weight'])/float(Graph[n]['edge'].count(1)+1)
+        if tn > ti or (tn == ti and i > n):
+            return CHO.njoin
+    return CHO.join
 
 
 nPoints = int(raw_input())
@@ -32,14 +41,7 @@ for i in range(0, nPoints):
                  if val == 1]
     neiPrevState = [prev_round[n] for n in neighbors]
     # Compare with neighbors to decide join or not
-    joinMWIS = True
-    ti = float(Graph[i]['weight'])/float(Graph[i]['edge'].count(1)+1)
-    for n in neighbors:
-        tn = float(Graph[n]['weight'])/float(Graph[n]['edge'].count(1)+1)
-        if tn > ti or (tn == ti and i > n):
-            joinMWIS = False
-            break
-    curr_round[i] = CHO.join if joinMWIS else CHO.njoin
+    curr_round[i] = comparePriority(i, neighbors)
 
 
 while True:
@@ -61,12 +63,5 @@ while True:
             curr_round[i] = CHO.join
             continue
         # Compare with neighbors to decide join or not
-        joinMWIS = True
-        ti = float(Graph[i]['weight'])/float(Graph[i]['edge'].count(1)+1)
-        for n in neighbors:
-            tn = float(Graph[n]['weight'])/float(Graph[n]['edge'].count(1)+1)
-            if tn > ti or (tn == ti and i > n):
-                joinMWIS = False
-                break
-        curr_round[i] = CHO.join if joinMWIS else CHO.njoin
+        curr_round[i] = comparePriority(i, neighbors)
 print([i for i, v in enumerate(curr_round) if v == CHO.join])
