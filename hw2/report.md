@@ -33,7 +33,8 @@ $ ./HW2b.py < test2.txt | sort | uniq -c
 Yes, it is possible that HW2 does not stop for some input. I test HW2b with all posssible
 permutations (1024 times) with the result above, it shows that test1.txt has 50% not stop
 and two MWIS results 25% for each. The reason is that in test1.txt's graph there are two neighbor nodoes:
-1 and 3 have equal W(v) / (deg(v) + 1) value so that they will keep make same decision in next round.
+1 and 3 have equal W(v) / (deg(v) + 1) value so that they will keep make same decision in next round, this
+situation happens if this two neighbor nodes are both in/out MWIS when initialized.
 
 
 
@@ -60,3 +61,6 @@ in identical output.
 Could you suggest a way to correct HW2b? HW2c is certainly not an answer. Hint: Exploit what you
 have learnt from HW2a. This part is optional. Those who have a correct answer to this question will
 receive a bonus score.
+
+The non-stop situation only happens when two neighbor node have same W(v) / (deg(v)+1), so we can avoid this
+problem by checking W(v) / (deg(v)+1)) of each note before assigning states.
