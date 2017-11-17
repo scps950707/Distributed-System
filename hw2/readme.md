@@ -36,6 +36,21 @@ and two "correct" MWIS results 25% for each. The reason is that in test1.txt's g
 1 and 3 have equal W(v) / (deg(v) + 1) value so that they will keep make same decision in next round, this
 situation happens if this two neighbor nodes are both in/out MWIS when initialized.
 
+And I also do random version which question requires and the result distribution is similar to the permutations
+test's result.
+
+```sh
+$ ./HW2b.py < test1.txt | sort | uniq -c
+231 [0, 3, 4, 5, 7, 8]
+258 [1, 4, 5, 7, 8, 9]
+511 not stop
+$ ./HW2b.py < test1.txt | sort | uniq -c
+258 [0, 3, 4, 5, 7, 8]
+241 [1, 4, 5, 7, 8, 9]
+501 not stop
+$ ./HW2b.py < test2.txt | sort | uniq -c
+1000 [4, 5, 6, 8]
+```
 
 
 
