@@ -3,11 +3,12 @@
 # Author:         scps950707
 # Email:          scps950707@gmail.com
 # Created:        2017-11-12 01:40
-# Last Modified:  2017-11-12 16:21
+# Last Modified:  2017-11-17 15:14
 # Filename:       HW2b.py
 # ==========================================================================
 from enum import Enum
 import itertools
+import random
 
 
 class CHO(Enum):
@@ -76,3 +77,9 @@ if __name__ == "__main__":
         prev_round = list(seq)
         curr_round = [CHO.njoin] * nPoints
         MWIS(prev_round, curr_round)
+    # for i in range(0, 1000):
+    #     prev_round = []
+    #     for j in range(0, nPoints):
+    #         prev_round.append(random.choice([CHO.join, CHO.njoin]))
+    #     curr_round = [CHO.njoin] * nPoints
+    #     MWIS(prev_round, curr_round)
