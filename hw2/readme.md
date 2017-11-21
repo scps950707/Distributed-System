@@ -77,5 +77,11 @@ Could you suggest a way to correct HW2b? HW2c is certainly not an answer. Hint: 
 have learnt from HW2a. This part is optional. Those who have a correct answer to this question will
 receive a bonus score.
 
+### My answer(wrong)
 The non-stop situation only happens when two neighbor node have same W(v) / (deg(v)+1), so we can avoid this
 problem by checking W(v) / (deg(v)+1)) of each note before assigning states.
+
+### Teacher's answer:
+In distributed system, we can't have global view of whole system so it is impossible to pick a valid global initial state.
+During the proccessing of rounds, when a node detected this situation with neighbors, it will pick a probability(usually 0.5)
+to join or not to prevent this situation happens forever.
