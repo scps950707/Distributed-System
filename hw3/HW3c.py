@@ -3,7 +3,7 @@
 # Author:         scps950707
 # Email:          scps950707@gmail.com
 # Created:        2017-11-29 17:32
-# Last Modified:  2017-11-30 14:55
+# Last Modified:  2017-12-02 17:35
 # Filename:       HW3c.py
 # ==========================================================================
 from enum import Enum
@@ -29,6 +29,7 @@ def MWIS(curr_round, p):
     checker = [False] * nPoints
     prev_sync_round = [CHO.njoin] * nPoints
     rounds = 0
+    dupCnt = 0
     while True:
         rounds += 1
         for i in range(0, nPoints):
@@ -46,15 +47,16 @@ def MWIS(curr_round, p):
                 # Compare with neighbors to decide join or not
                 curr_round[i] = comparePriority(i, neighbors, curr_round)
         if checker.count(True) == nPoints:
-            end = True
+            dup = True
             for i in range(0, nPoints):
                 if curr_round[i] != prev_sync_round[i]:
                     prev_sync_round[i] = curr_round[i]
-                    end = False
-            if end:
-                break
-            else:
-                checker = [False] * nPoints
+                    dup = False
+            if dup:
+                dupCnt += 1
+                if dupCnt > 2:
+                    break
+            checker = [False] * nPoints
     # print([idx for idx, v in enumerate(curr_round) if v == CHO.join])
     mwis = [idx for idx, v in enumerate(curr_round) if v == CHO.join]
     # print(mwis)
@@ -92,9 +94,13 @@ if __name__ == "__main__":
         print("average rounds:" + str(averRounds))
         print("average weight:" + str(averWeight))
     plt.figure(1)
+    plt.xlabel('p')
+    plt.ylabel('averaged convergence time')
     plt.plot(pointsX, arrR)
     plt.grid(b=True, which='major', color='k', linestyle='--')
     plt.figure(2)
+    plt.xlabel('p')
+    plt.ylabel('averaged total weight')
     plt.plot(pointsX, arrW)
     plt.grid(b=True, which='major', color='k', linestyle='--')
     plt.show()

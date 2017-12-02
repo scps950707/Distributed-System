@@ -3,7 +3,7 @@
 # Author:         scps950707
 # Email:          scps950707@gmail.com
 # Created:        2017-11-29 17:27
-# Last Modified:  2017-11-30 14:55
+# Last Modified:  2017-12-02 17:35
 # Filename:       HW3b.py
 # ==========================================================================
 from enum import Enum
@@ -27,6 +27,7 @@ def comparePriority(i, neighbors, curr_round):
 def MWIS(curr_round, p):
     checker = [False] * nPoints
     prev_sync_round = [CHO.njoin] * nPoints
+    dupCnt = 0
     while True:
         for i in range(0, nPoints):
             if random.randint(1, 10) > p:
@@ -43,15 +44,16 @@ def MWIS(curr_round, p):
                 # Compare with neighbors to decide join or not
                 curr_round[i] = comparePriority(i, neighbors, curr_round)
         if checker.count(True) == nPoints:
-            end = True
+            dup = True
             for i in range(0, nPoints):
                 if curr_round[i] != prev_sync_round[i]:
                     prev_sync_round[i] = curr_round[i]
-                    end = False
-            if end:
-                break
-            else:
-                checker = [False] * nPoints
+                    dup = False
+            if dup:
+                dupCnt += 1
+                if dupCnt > 2:
+                    break
+            checker = [False] * nPoints
     print([idx for idx, v in enumerate(curr_round) if v == CHO.join])
 
 
